@@ -51,13 +51,48 @@ public class Car
     {
         return passengers.size();
     }
- 
-    public void pickUp(Passenger pass)
+
+    public int getMilesTraveled()
+    {
+        return miles;
+    }
+
+    /**
+     * Checks current location and our list of passengers to see
+     * if we can drop any of them off.
+     * @return an ArrayList of passengers that are disembarking
+     */
+    public ArrayList<Passenger> dropoff()
+    {
+        ArrayList<Passenger> leaving = new ArrayList<Passenger>();
+        for (int i = passengers.size() - 1; i >= 0; i--)
+        {
+            if (passengers.get(i).getDest() == this.loc)
+                leaving.add(passengers.remove(i));
+        }
+        return leaving;
+    }
+
+    /**
+     * Checks to see if there's room in the car, onfirms that the 
+     * passenger is heading in the same direction as the car, and 
+     * adds them to our list of current passengers.
+     * @param pass a Passenger object to put into car
+     * @return true if we were able to add them
+     */
+    public boolean pickup(Passenger pass)
     {
         if (passengers.size() < MAX_PASSENGERS)
         {
-            
+            if (pass.getLoc() == this.loc &&
+               (pass.getDest() > pass.getLoc() && this.dest > this.loc) ||
+               (pass.getDest() < pass.getLoc() && this.dest < this.loc))
+                {
+                    passengers.add(pass);
+                    return true;
+                }
         }
+        return false;
     }
 
     public String toString()
@@ -70,7 +105,7 @@ public class Car
                 result += ",";
             result += passengers.get(i);
         } 
-        result += "]]";
+        result += "],miles=" + miles + "]";
         return result;
     }
 
