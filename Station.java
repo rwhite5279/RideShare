@@ -41,7 +41,7 @@ public class Station
     {
         String result = super.toString();
         result += "[stationNum=" + stationNum;
-        result += ",waiting=[";
+        result += "\n    waiting=[";
         for (int i = 0; i < waiting.size(); i++)
         {
             if (i >= 1)
