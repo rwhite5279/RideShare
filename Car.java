@@ -77,6 +77,7 @@ public class Car
      * Checks to see if there's room in the car, onfirms that the 
      * passenger is heading in the same direction as the car, and 
      * adds them to our list of current passengers.
+     * Code here duplicates what might be happening in the Tester/Runner.
      * @param pass a Passenger object to put into car
      * @return true if we were able to add them
      */
