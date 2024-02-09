@@ -13,13 +13,13 @@ public class Station
 {
     ArrayList<Passenger> waiting;
     private int stationNum;
-    public static int firstNum = 0;
+    public static int currentNum = 0;
     
     public Station()
     {
         waiting = new ArrayList<Passenger>();
-        stationNum = firstNum;
-        firstNum++;
+        stationNum = currentNum;
+        currentNum++;
     }
 
     public int getStationNum()
@@ -32,9 +32,16 @@ public class Station
         waiting.add(p);
     }
 
-    public void removeWaiting(Passenger p)
+    public Passenger removeWaiting(Passenger p)
     {
+        Passenger removed = p;
         waiting.remove(p);
+        return removed;
+    }
+
+    public ArrayList<Passenger> getWaiting()
+    {
+        return waiting;
     }
 
     public String toString()

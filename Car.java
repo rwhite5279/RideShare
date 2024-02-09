@@ -60,17 +60,16 @@ public class Car
     /**
      * Checks current location and our list of passengers to see
      * if we can drop any of them off.
-     * @return an ArrayList of passengers that are disembarking
      */
-    public ArrayList<Passenger> dropoff()
+    public void dropoff(Station s)
     {
-        ArrayList<Passenger> leaving = new ArrayList<Passenger>();
         for (int i = passengers.size() - 1; i >= 0; i--)
         {
             if (passengers.get(i).getDest() == this.loc)
-                leaving.add(passengers.remove(i));
+                passengers.remove(i);
+            else if (this.dest == s.getStationNum())
+                s.addWaiting(passengers.remove(i));
         }
-        return leaving;
     }
 
     /**
@@ -81,19 +80,22 @@ public class Car
      * @param pass a Passenger object to put into car
      * @return true if we were able to add them
      */
-    public boolean pickup(Passenger pass)
+    public void pickup(Station s)
     {
-        if (passengers.size() < MAX_PASSENGERS)
+        ArrayList<Passenger> passAtCurrentStation = s.getWaiting();
+        int i = passAtCurrentStation.size() - 1;
+        while (i >= 0 && passengers.size() < MAX_PASSENGERS)
         {
-            if (pass.getLoc() == this.loc &&
-               (pass.getDest() > pass.getLoc() && this.dest > this.loc) ||
-               (pass.getDest() < pass.getLoc() && this.dest < this.loc))
-                {
-                    passengers.add(pass);
-                    return true;
-                }
+            if ((passAtCurrentStation.get(i).getDest() > passAtCurrentStation.get(i).getLoc() && 
+                 this.dest > this.loc) ||
+                (passAtCurrentStation.get(i).getDest() < passAtCurrentStation.get(i).getLoc() && 
+                 this.dest < this.loc))
+            {
+                passengers.add(passAtCurrentStation.get(i));
+                s.removeWaiting(passAtCurrentStation.get(i));
+            }
+            i--;
         }
-        return false;
     }
 
     public String toString()

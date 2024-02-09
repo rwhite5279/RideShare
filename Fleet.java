@@ -19,6 +19,11 @@
         cars[n] = new Car(loc, dest);
     }
 
+    public Car[] getCars()
+    {
+        return cars;
+    }
+
     public ArrayList<Car> getCarsAtLoc(Station s)
     {
         ArrayList<Car> carsAtLoc = new ArrayList<Car>();
