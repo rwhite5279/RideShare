@@ -15,6 +15,8 @@ public class Car
     public static final int MAX_PASSENGERS = 3;
     /**
      * The Car class tracks a car in the RideShare project.
+     * @param loc the current location of the car, a Station number
+     * @param dest the final destination of the car, a Station number
      */
     public Car(int loc, int dest)
     {
@@ -25,16 +27,30 @@ public class Car
         passengers = new ArrayList<Passenger>();
     }
 
+    /**
+     * Identifies the current location of the car
+     * @return the car's location, a Station number
+     */
     public int getLoc()
     {
         return loc;
     }
 
+    /**
+     * Identifies the final destination of the car
+     * @return the final destination, a Station number
+     */
     public int getDest()
     {
         return dest;
     }
 
+    /**
+     * Moves the car one station in the correct direction,
+     * assuming the car has not reached its final destination.
+     * Updates miles (one for each station, regardless of direction),
+     * and passengerMiles, one for each passenger carried.
+     */
     public void move()
     {
         if (loc != dest)
@@ -92,17 +108,39 @@ public class Car
         return exiting;
     }
 
+    /**
+     * Identifies how many passengers are currently in the car
+     * @return the number of passengers in the car
+     */
     public int getPassengerCount()
     {
         return passengers.size();
     }
 
+    /**
+     * Identifies the total number of miles the car has travelled
+     * @return the number of miles traveled (ie. "odometer reading")
+     */
     public int getMilesTraveled()
     {
         return miles;
     }
 
+    /**
+     * Returns the number of passenger-miles the car has had, where
+     * three passsengers riding for two miles would be six passenger-miles.
+     * Can be used to determine earnings.
+     * @return the current total number of passenger miles for this car
+     */
+    public int getPassengerMiles()
+    {
+        return passengerMiles;
+    }
 
+    /**
+     * Overrides the toString method
+     * @return a string representation of the car, including passengers currently being carried
+     */
     public String toString()
     {
         String result = super.toString() + "[loc=" + loc + ",dest=" + dest +
@@ -116,5 +154,4 @@ public class Car
         result += "],miles=" + miles + ",passengerMiles=" + passengerMiles + "]";
         return result;
     }
-
 }
