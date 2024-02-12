@@ -20,11 +20,9 @@ public class Car
      */
     public Car(int loc, int dest)
     {
-        this.loc = loc;
-        this.dest = dest;
-        miles = 0;
-        passengerMiles = 0;
-        passengers = new ArrayList<Passenger>();
+
+
+
     }
 
     /**
@@ -42,7 +40,7 @@ public class Car
      */
     public int getDest()
     {
-        return dest;
+
     }
 
     /**
@@ -53,15 +51,13 @@ public class Car
      */
     public void move()
     {
-        if (loc != dest)
-        {
-            if (loc < dest)
-                loc++;
-            else // (loc > dest)
-                loc--; 
-            miles++;
-            passengerMiles += passengers.size();
-        }
+    
+    
+    
+    
+    
+    
+    
     }
 
     /**
@@ -73,18 +69,15 @@ public class Car
      */
     public boolean addPassenger(Passenger p)
     {
-        if (passengers.size() < MAX_PASSENGERS &&
-            (p.getLoc() < p.getDest() && this.loc < this.dest) ||
-            (p.getLoc() > p.getDest() && this.loc > this.dest))
-        {
-            passengers.add(p);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    
+
+
+
+
+
     }
+
+
 
     /**
      * Checks to see if any passengers here should exit the car, based on
@@ -95,17 +88,14 @@ public class Car
      */
     public ArrayList<Passenger> removePassengers()
     {
-        ArrayList<Passenger> exiting = new ArrayList<Passenger>();
-        for (int i = passengers.size() - 1; i >= 0; i--)
-        {
-            if (passengers.get(i).getLoc() == this.loc ||
-                this.loc == this.dest)
-            {
-                exiting.add(passengers.get(i));
-                passengers.remove(i);
-            }
-        }
-        return exiting;
+    
+
+
+
+
+
+
+
     }
 
     /**

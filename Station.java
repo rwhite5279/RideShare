@@ -15,18 +15,14 @@ import java.util.ArrayList;
  */
 public class Station
 {
-    ArrayList<Passenger> waiting;
-    private int stationNum;
-    public static int currentNum = 0;
-    
+   
+
     /**
      * Initializes the empty station
      */
     public Station()
     {
-        waiting = new ArrayList<Passenger>();
-        stationNum = currentNum;
-        currentNum++;
+
     }
 
     /**
@@ -35,7 +31,7 @@ public class Station
      */
     public int getStationNum()
     {
-        return stationNum;
+
     }
 
     /**
@@ -44,7 +40,9 @@ public class Station
      */
     public void addWaiting(Passenger p)
     {
-        waiting.add(p);
+
+        
+
     }
 
     /**
@@ -53,9 +51,10 @@ public class Station
      */
     public Passenger removeWaiting(Passenger p)
     {
-        Passenger removed = p;
-        waiting.remove(p);
-        return removed;
+    
+
+
+
     }
 
     /**
