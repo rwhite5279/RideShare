@@ -10,8 +10,9 @@ public class Car
     private int loc;
     private int dest;
     private int miles;
+    private int passengerMiles;
     private ArrayList<Passenger> passengers;
-    public final int MAX_PASSENGERS = 3;
+    public static final int MAX_PASSENGERS = 3;
     /**
      * The Car class tracks a car in the RideShare project.
      */
@@ -20,6 +21,7 @@ public class Car
         this.loc = loc;
         this.dest = dest;
         miles = 0;
+        passengerMiles = 0;
         passengers = new ArrayList<Passenger>();
     }
 
@@ -35,18 +37,61 @@ public class Car
 
     public void move()
     {
-        if (loc < dest)
+        if (loc != dest)
         {
-            loc++;
+            if (loc < dest)
+                loc++;
+            else // (loc > dest)
+                loc--; 
             miles++;
-        }
-        else if (loc > dest)
-        {
-            loc--; 
-            miles++;
+            passengerMiles += passengers.size();
         }
     }
- 
+
+    /**
+     * Allows for th addition of a passenger to our car, as long 
+     * as there's room and the passenger is heading in the same 
+     * direction.
+     * @param p a Passenger to add to this car
+     * @return true if we were able to add the passenger, which the Runner should be confirming; otherwise, false
+     */
+    public boolean addPassenger(Passenger p)
+    {
+        if (passengers.size() < MAX_PASSENGERS &&
+            (p.getLoc() < p.getDest() && this.loc < this.dest) ||
+            (p.getLoc() > p.getDest() && this.loc > this.dest))
+        {
+            passengers.add(p);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Checks to see if any passengers here should exit the car, based on
+     *      1) the passenger has arrived at their destination, or
+     *      2) the car has arrived at its destination and there's a
+     *         passenger who hasn't reached their yet.
+     *  @param an ArrayList of Passengers leaving the car
+     */
+    public ArrayList<Passenger> removePassengers()
+    {
+        ArrayList<Passenger> exiting = new ArrayList<Passenger>();
+        for (int i = passengers.size() - 1; i >= 0; i--)
+        {
+            if (passengers.get(i).getLoc() == this.loc ||
+                this.loc == this.dest)
+            {
+                exiting.add(passengers.get(i));
+                passengers.remove(i);
+            }
+        }
+        return exiting;
+    }
+
     public int getPassengerCount()
     {
         return passengers.size();
@@ -57,46 +102,6 @@ public class Car
         return miles;
     }
 
-    /**
-     * Checks current location and our list of passengers to see
-     * if we can drop any of them off.
-     */
-    public void dropoff(Station s)
-    {
-        for (int i = passengers.size() - 1; i >= 0; i--)
-        {
-            if (passengers.get(i).getDest() == this.loc)
-                passengers.remove(i);
-            else if (this.dest == s.getStationNum())
-                s.addWaiting(passengers.remove(i));
-        }
-    }
-
-    /**
-     * Checks to see if there's room in the car, onfirms that the 
-     * passenger is heading in the same direction as the car, and 
-     * adds them to our list of current passengers.
-     * Code here duplicates what might be happening in the Tester/Runner.
-     * @param pass a Passenger object to put into car
-     * @return true if we were able to add them
-     */
-    public void pickup(Station s)
-    {
-        ArrayList<Passenger> passAtCurrentStation = s.getWaiting();
-        int i = passAtCurrentStation.size() - 1;
-        while (i >= 0 && passengers.size() < MAX_PASSENGERS)
-        {
-            if ((passAtCurrentStation.get(i).getDest() > passAtCurrentStation.get(i).getLoc() && 
-                 this.dest > this.loc) ||
-                (passAtCurrentStation.get(i).getDest() < passAtCurrentStation.get(i).getLoc() && 
-                 this.dest < this.loc))
-            {
-                passengers.add(passAtCurrentStation.get(i));
-                s.removeWaiting(passAtCurrentStation.get(i));
-            }
-            i--;
-        }
-    }
 
     public String toString()
     {
@@ -108,7 +113,7 @@ public class Car
                 result += ",";
             result += passengers.get(i);
         } 
-        result += "],miles=" + miles + "]";
+        result += "],miles=" + miles + ",passengerMiles=" + passengerMiles + "]";
         return result;
     }
 

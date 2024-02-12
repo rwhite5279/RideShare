@@ -8,15 +8,18 @@
 {
 
     private Car[] cars;
+    public static int currentIndex = 0;
+
 
     public Fleet(int n)
     {
         cars = new Car[n];
     }
 
-    public void initCar(int n, int loc, int dest)
+    public void initCar(int loc, int dest)
     {
-        cars[n] = new Car(loc, dest);
+        cars[currentIndex] = new Car(loc, dest);
+        currentIndex++;
     }
 
     public Car[] getCars()
