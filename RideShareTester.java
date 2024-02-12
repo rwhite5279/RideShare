@@ -3,6 +3,18 @@ import java.util.ArrayList;
 
 public class RideShareTester
 {
+    public static void display(Station[] stations, Fleet fleet)
+    {
+        // Display current state of road, station by station
+        for (Station s : stations)
+        {
+            System.out.println("\n--------------\n");
+            System.out.println(s);
+            System.out.println("Cars here:");
+            System.out.println("    " + fleet.getCarsAtLoc(s));
+        } 
+    }
+    
     public static void main(String[] args)
     {
         System.out.println("Testing RideShare Pickup/Dropoff!");
@@ -28,14 +40,7 @@ public class RideShareTester
         fleet.initCar(2, 0);
         fleet.initCar(3, 1);
 
-        // Display current state of road, station by station
-        for (Station s : stations)
-        {
-            System.out.println("\n--------------\n");
-            System.out.println(s);
-            System.out.println("Cars here:");
-            System.out.println("    " + fleet.getCarsAtLoc(s));
-        } 
+        display(stations, fleet);
 
         for (int turn = 1; turn < NUM_OF_STATIONS + 1; turn++)
         {
@@ -71,15 +76,7 @@ public class RideShareTester
                 // drive, if possible
                 car.move();
             }
-
-            // Display current state of road, station by station
-            for (Station s : stations)
-            {
-                System.out.println("\n--------------\n");
-                System.out.println(s);
-                System.out.println("Cars here:");
-                System.out.println("    " + fleet.getCarsAtLoc(s));
-            } 
+            display(stations, fleet);
         }
     }
 }
